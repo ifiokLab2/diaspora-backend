@@ -1,0 +1,12 @@
+django
+djangorestframework
+django-cors-headers
+djangorestframework-simplejwt
+stripe
+pillow  
+python-dotenv
+gunicorn
+whitenoise
+django-cities-light
+cloudinary
+django-cloudinary-storage

@@ -1,0 +1,105 @@
+1.Category = Professional services (sub category =Accountants
+
+Lawyers
+
+Lesson Teachers
+
+Project Manager
+
+IT Developers
+
+Business Consultants
+
+Social Workers)
+
+2. Category = Night Life (sub category = Clubbing
+Hookup
+Bars & Lounge)
+
+3. Category = Arts & Entertainment (sub category = Musicians
+DJs
+Dancers
+Waiters and Waitresses
+Decorators
+Cooks & Chefs)
+
+4. Category = Home services (sub category = Child minders
+Painters
+Cleaners
+Movers and Van Hires
+Gardener
+Furniture Fixers)
+
+5. Category =  Restaurant (sub category = Nigerian Restaurants
+Jamaican Restaurants)
+
+
+6. Category  = professional service (sub category = Accountants
+Lawyers
+Lesson Teachers
+Project Manager
+IT Developers
+Business Consultants
+Social Workers)
+
+7. category  = Religious Organizations (sub category  = Churches
+Mosques
+Worship Places)
+
+8. Category = More (sub category = Hotels & Travels
+Repair services
+Beauty & Fashion)
+
+
+9. Real Estates (sub  = Houses)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+my-shop-frontend/
+├── app/
+│   ├── (auth)/                  # Auth Route Group
+│   │   ├── login/page.tsx       # Logic for JWT acquisition
+│   │   └── register/page.tsx
+│   ├── (shop)/                  # Main Store Route Group
+│   │   ├── cart/page.tsx        # Cart overview with Clear/Update logic
+│   │   ├── checkout/page.tsx    # Redirects to Stripe Checkout URL
+│   │   ├── success/page.tsx     # Payment confirmation + Store refresh
+│   │   └── products/[slug]/page.tsx
+│   ├── layout.tsx               # Root layout with AuthProvider
+│   └── page.tsx                 # Product Grid (Server Component)
+├── components/
+│   ├── cart/
+│   │   ├── CartItem.tsx         # Item row with + / - / Trash buttons
+│   │   └── AddToCartButton.tsx  # Optimized logic for Zustand/Auth
+│   ├── layout/
+│   │   ├── Navbar.tsx           # Dynamic Cart Counter & Auth status
+│   │   └── Footer.tsx
+│   └── ui/                      # Reusable buttons/inputs (Shadcn/Tailwind)
+├── context/
+│   └── AuthContext.tsx          # JWT state & login/logout persistence
+├── lib/
+│   ├── api.ts                   # Axios instance with Bearer token interceptors
+│   └── utils.ts                 # Currency/Date formatters
+├── store/
+│   └── useCartStore.ts          # Zustand store (Fetch, Update, Clear, Remove)
+├── middleware.ts                # Protects /checkout and /profile routes
+└── .env.local                   # NEXT_PUBLIC_API_URL & Stripe Public Key
+
+
+
+Would you like me to help you create the "Listing Detail" page where we actually trigger the ListingView increment whenever a customer clicks?
+
+Would you like me to help you create the "Listing Views" middleware so you don't have to manually increment the count every time someone opens a page?

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .container {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 16px;
+        }
+        .alert-box {
+            background-color: #fff4f4;
+            border-left: 4px solid #cc0000;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .footer { font-size: 12px; color: #888888; margin-top: 30px; }
+    </style>
+</head>
+<body style="background-color: #f9f9f9; padding: 20px;">
+    <div class="container">
+        <h2 style="color: #111111;">Security Alert: Password Changed</h2>
+        <p>Hello <strong>{{ user.first_name|default:"there" }}</strong>,</p>
+        <p>This is a confirmation that the password for your <strong>DiasporaBlack</strong> account was recently changed.</p>
+        
+        <div class="alert-box">
+            <strong>Didn't make this change?</strong><br>
+            If you did not change your password, please contact our support team immediately or secure your account by requesting a new reset link.
+        </div>
+
+        <p style="font-size: 13px; color: #666666;">
+            Time of change: {{ time|date:"F j, Y, g:i a" }} UTC
+        </p>
+
+        <div class="footer">
+            <p>&copy; 2026 DiasporaBlack Marketplace. This is an automated security notification.</p>
+        </div>
+    </div>
+</body>
+</html>
