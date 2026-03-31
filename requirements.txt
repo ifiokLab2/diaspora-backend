@@ -13,3 +13,4 @@ django-cloudinary-storage
 dj_database_url
 django-ckeditor
 channels
+psycopg2
