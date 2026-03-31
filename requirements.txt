@@ -10,3 +10,4 @@ whitenoise
 django-cities-light
 cloudinary
 django-cloudinary-storage
+dj_database_url
