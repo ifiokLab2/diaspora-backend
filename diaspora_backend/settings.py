@@ -51,8 +51,9 @@ FRONTEND_URL = os.environ.get('FRONTEND_URL')
 CORS_ALLOW_CREDENTIALS = True
 
 # Optional: Allow all headers (useful for JWT Authorization headers)
-CORS_ALLOW_ALL_ORIGINS = True # Keep this False for better security
+CORS_ALLOW_ALL_ORIGINS = False # Keep this False for better security
 # Application definition
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -60,6 +61,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',   # Limit for unauthenticated users
+        'user': '1000/day'   # Limit for logged-in users
+    }
 }
 
 CORS_ALLOW_HEADERS = [
@@ -236,10 +245,19 @@ WSGI_APPLICATION = 'diaspora_backend.wsgi.application'
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+
+    DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
+}
+
 }"""
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
+    'default': dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True if not DEBUG else False
+    ),
 }
 
 
@@ -310,7 +328,7 @@ cloudinary.config(
     cloud_name = CLOUDINARY_STORAGE['CLOUD_NAME'],
     api_key = CLOUDINARY_STORAGE['API_KEY'],
     api_secret = CLOUDINARY_STORAGE['API_SECRET'],
-    secure = False
+    secure = True # Changed from False
 )
 STORAGES = {
     "default": {
@@ -331,21 +349,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'App.myuser'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if not DEBUG:
+    # Tell Django it's behind a proxy that handles HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    # Enforce HTTPS
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
+    # HSTS (Tells browsers to ONLY talk to you via HTTPS)
+    SECURE_HSTS_SECONDS = 31536000 # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 
 # --- EMAIL SETTINGS ---
