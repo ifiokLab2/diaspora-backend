@@ -176,8 +176,10 @@ class BaseLoginView(APIView):
                 role = "seller"
             if user.is_customer:
                 role = "customer"
+
+            # Please create a {role_name} account to continue.
             return Response(
-                {"error": f"This account is registered as a {role}. Please create a {role_name} account to continue.","exist":True},
+                {"error": f"This account is already registered as a {role}","exist":True},
                 status=status.HTTP_403_FORBIDDEN
             )
 

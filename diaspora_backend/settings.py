@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["diaspora-backend-pyhq.onrender.com","127.0.0.1"]
 
@@ -80,13 +80,6 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
-"""SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),
-}"""
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Matches your cookie maxAge logic
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -306,9 +299,17 @@ CITIES_LIGHT_DATA_DIR = os.path.join(BASE_DIR, 'data')
 # --- STATIC & MEDIA ---
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# 2. Additional folders to look for (outside of apps)
+
+# 1. Define the path
+STATIC_DIRS_PATH = BASE_DIR / "static"
+
+# 2. Automatically create the folder if it's missing
+# parents=True creates any missing parent folders; exist_ok=True prevents errors if it already exists
+STATIC_DIRS_PATH.mkdir(parents=True, exist_ok=True)
+
+# 3. Assign it to STATICFILES_DIRS
 STATICFILES_DIRS = [
-    BASE_DIR / "static", 
+    STATIC_DIRS_PATH,
 ]
 
 
@@ -328,7 +329,7 @@ cloudinary.config(
     cloud_name = CLOUDINARY_STORAGE['CLOUD_NAME'],
     api_key = CLOUDINARY_STORAGE['API_KEY'],
     api_secret = CLOUDINARY_STORAGE['API_SECRET'],
-    secure = True # Changed from False
+    secure = False # Changed to true in production
 )
 STORAGES = {
     "default": {
@@ -336,9 +337,11 @@ STORAGES = {
     },
     "staticfiles": {
         # Optional: Use Cloudinary for CSS/JS too, or use WhiteNoise
-        "BACKEND": "cloudinary_storage.storage.StaticHashedCloudinaryStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+# To this (Use WhiteNoise for static, Cloudinary for Media):
+
 
 
 MEDIA_URL = '/media/'
@@ -350,6 +353,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'App.myuser'
 
 if not DEBUG:
+    print('hello')
     # Tell Django it's behind a proxy that handles HTTPS
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
@@ -362,6 +366,8 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000 # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+
+
 
 
 # --- EMAIL SETTINGS ---
