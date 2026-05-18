@@ -37,7 +37,8 @@ ALLOWED_HOSTS = ["diaspora-backend-pyhq.onrender.com","127.0.0.1"]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://diaspora-frontend-az37.onrender.com"
+    "https://diaspora-frontend-az37.onrender.com",
+    "https://diaspora-frontend-eta.vercel.app"
 ]
 
 
